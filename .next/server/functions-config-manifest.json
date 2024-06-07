@@ -1,0 +1,9 @@
+{
+  "version": 1,
+  "functions": {
+    "/api/categories": {},
+    "/api/comments": {},
+    "/api/posts/[slug]": {},
+    "/api/posts": {}
+  }
+}

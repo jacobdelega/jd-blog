@@ -2,12 +2,18 @@
 import { React, useEffect, useState } from "react";
 import styles from "./write.module.css";
 import Image from "next/image";
-import ReactQuill from "react-quill";
+
+// Must import dynamic as SSR does not work with ReactQuill
+import dynamic from "next/dynamic";
+// import ReactQuill from "react-quill";
+const DynamicQuill = dynamic(() => import("react-quill"), { ssr: false });
 import "react-quill/dist/quill.bubble.css";
+
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { app } from "@/app/utils/firebase";
+
 const WritePage = () => {
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(false);
@@ -61,14 +67,14 @@ const WritePage = () => {
         router.push("/");
     }
 
-    const slugify = (str) =>
-        str
-            .toLowerCase()
+    const slugify = (str) => {
+        str.toLowerCase()
             .trim()
             .replace(/[^\w\s-]/g, "")
             .replace(/[\s_-]+/g, "-")
             .replace(/^-+|-+$/g, "");
-    
+    };
+
     const handleSubmit = async () => {
         const res = await fetch("/api/posts", {
             method: "POST",
@@ -152,7 +158,7 @@ const WritePage = () => {
                         </button>
                     </div>
                 )}
-                <ReactQuill
+                <DynamicQuill
                     className={styles.textArea}
                     theme='bubble'
                     value={value}
