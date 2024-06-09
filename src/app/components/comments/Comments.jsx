@@ -9,23 +9,19 @@ import { useSession } from "next-auth/react";
 const fetcher = async (url) => {
     const res = await fetch(url);
 
-    const data = await res.json();
-
     if (!res.ok) {
         const error = new Error(data.message);
         throw error;
     }
 
-    return data;
+    return res.json();
 };
 
 const Comments = ({ postSlug }) => {
     const { status } = useSession({ postSlug });
-
-    const { data, isLoading, mutate } = useSWR(`api/comments?postSlug=${postSlug}`, fetcher);
+    const { data, isLoading, mutate } = useSWR(`/api/comments?postSlug=${postSlug}`, fetcher);
 
     const [desc, setDesc] = useState("");
-
     const handleSubmit = async () => {
         await fetch("/api/comments", {
             method: "POST",
@@ -52,7 +48,7 @@ const Comments = ({ postSlug }) => {
                     </button>
                 </div>
             ) : (
-                <Link href='login'>Login to write a comment</Link>
+                <Link href='/login'>Login to write a comment</Link>
             )}
             <div className={styles.comments}>
                 {isLoading
@@ -70,7 +66,7 @@ const Comments = ({ postSlug }) => {
                                   />
                                   <div className={styles.userInfo}>
                                       <span className={styles.username}>{item.user.name}</span>
-                                      <span className={styles.date}>{item.createdAt.substring(0,10)}</span>
+                                      <span className={styles.date}>{item.createdAt.substring(0, 10)}</span>
                                   </div>
                               </div>
                               <p className={styles.desc}>{item.desc}</p>
