@@ -17,9 +17,9 @@ const Menu = () => {
             <MenuCategories/>
 
             {/* Bottom half */}
-            <h2 className={styles.subtitle}>Chosen by the author</h2>
+            {/* <h2 className={styles.subtitle}>Chosen by the author</h2>
             <h1 className={styles.title}>Editors pick</h1>
-            <MenuPost withImage={true}/>
+            <MenuPost withImage={true}/> */}
         </div>
     );
 };

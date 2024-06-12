@@ -23,22 +23,22 @@
     border-radius: 10px;
 }
 
-.category.style {
+.category.react {
     background-color: #57c4ff31;
 }
-.category.fashion {
+.category.nextjs {
     background-color: #da85c731;
 }
-.category.food {
+.category.freelancing {
     background-color: #7fb88133;
 }
-.category.travel {
+.category.fitness {
     background-color: #ff795736;
 }
-.category.culture {
+.category.leetcode {
     background-color: #ffb04f45;
 }
-.category.coding {
+.category.python {
     background-color: #5e3fff31;
 }
 

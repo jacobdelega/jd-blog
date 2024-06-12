@@ -104,12 +104,12 @@ const WritePage = () => {
             <select
                 className={styles.select}
                 onChange={(e) => setCatSlug(e.target.value)}>
-                <option value='style'>style</option>
-                <option value='fashion'>fashion</option>
-                <option value='food'>food</option>
-                <option value='culture'>culture</option>
-                <option value='travel'>travel</option>
-                <option value='coding'>coding</option>
+                <option value='react'>React</option>
+                <option value='nextjs'>NextJS</option>
+                <option value='python'>Python</option>
+                <option value='fitness'>Fitness</option>
+                <option value='freelancing'>Freelancing</option>
+                <option value='leetcode'>LeetCode</option>
             </select>
             <div className={styles.editor}>
                 <button
@@ -124,12 +124,6 @@ const WritePage = () => {
                 </button>
                 {open && (
                     <div className={styles.add}>
-                        <input
-                            type='file'
-                            id='image'
-                            onChange={(e) => setFile(e.target.files[0])}
-                            style={{ display: "none" }}
-                        />
                         <button className={styles.addButton}>
                             <label htmlFor='image'>
                                 <Image
@@ -138,23 +132,13 @@ const WritePage = () => {
                                     width={16}
                                     height={16}
                                 />
+                                <input
+                                    type='file'
+                                    id='image'
+                                    onChange={(e) => setFile(e.target.files[0])}
+                                    style={{ display: "none" }}
+                                />
                             </label>
-                        </button>
-                        <button className={styles.addButton}>
-                            <Image
-                                src='/external.png'
-                                alt=''
-                                width={16}
-                                height={16}
-                            />
-                        </button>
-                        <button className={styles.addButton}>
-                            <Image
-                                src='/video.png'
-                                alt=''
-                                width={16}
-                                height={16}
-                            />
                         </button>
                     </div>
                 )}
@@ -169,7 +153,6 @@ const WritePage = () => {
             <button
                 className={styles.publish}
                 onClick={handleSubmit}>
-                {" "}
                 Publish
             </button>
         </div>

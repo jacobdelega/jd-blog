@@ -1,20 +1,33 @@
+'use client';
 import React from "react";
 import styles from "./featured.module.css";
 import Image from "next/image";
+import Link from "next/link";
+
+import HeroLottie from "../lotties/HeroLottie";
+
 const Featured = () => {
     return (
         <div className={styles.container}>
-            <h1 className={styles.title}>
-                <b>Hey, Jacob here!</b> Discover my stories and creative ideas
-            </h1>
+            {/* <h1 className={styles.title}>
+                <b>Hey, Jacob here!</b> Welcome to my blog.
+            </h1> */}
             <div className={styles.post}>
                 <div className={styles.imgContainer}>
-                    <Image className={styles.image} src='/p1.jpeg' alt='' fill  />
+                    {/* <Image
+                        className={styles.image}
+                        src='/p1.jpeg'
+                        alt=''
+                        fill
+                    /> */}
+                    <HeroLottie src='/lotties/hero_lottie.json'/>
                 </div>
                 <div className={styles.textContainer}>
-                    <h1 className={styles.postTitle}>Lorem ipsum dolor, sit amet consectetur adipisicing elit.</h1>
-                    <p className={styles.postDesc}>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Tempore excepturi facere exercitationem iure molestias sit molestiae a, sed voluptatibus mollitia? Numquam, ipsum. Ipsam, commodi. Iste labore repellendus nobis in voluptatibus.</p>
-                    <button className={styles.button}>Read More</button>
+                    <h1 className={styles.postTitle}>I'm Jacob Delega.</h1>
+                    <p className={styles.postDesc}>A software engineer that aims to become a expert full stack web developer. I will share my experiences during my journey below. </p>
+                    <Link href='#category'>
+                        <button className={styles.button}>Read More</button>
+                    </Link>
                 </div>
             </div>
         </div>

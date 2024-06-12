@@ -19,7 +19,7 @@ import prisma from "@/app/utils/connect";
 const CategoryList = async () => {
     const data = await prisma.category.findMany();
     return (
-        <div className={styles.container}>
+        <div className={styles.container} id='category'>
             <h1 className={styles.title}>Popular Categories</h1>
             <div className={styles.categories}>
                 {data?.map((item) => (

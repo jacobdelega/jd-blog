@@ -64,8 +64,10 @@
 
 .publish {
     position: absolute;
-    top: -68px;
-    right: -150px;
+    /* top: -68px; */
+    top: 0;
+    /* right: -150px; */
+    right: 0;
     padding: 10px 20px;
     border: none;
     background-color: #1a8917;

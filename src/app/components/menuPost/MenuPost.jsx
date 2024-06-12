@@ -2,15 +2,15 @@ import React from "react";
 import styles from './menuPost.module.css'
 import Image from "next/image";
 import Link from "next/link";
+import prisma from '../../utils/connect';
 
 
 
-
-const MenuPost = ({ withImage }) => {
+const MenuPost = async ({ withImage }) => {
     return (
         <div className={styles.items}>
             <Link
-                href='/'
+                href='/posts/1'
                 className={styles.item}>
                 {withImage && (
                     <div className={styles.imgContainer}>
@@ -23,8 +23,8 @@ const MenuPost = ({ withImage }) => {
                     </div>
                 )}
                 <div className={styles.textContainer}>
-                    <span className={` ${styles.category} ${styles.travel} `}>Travel</span>
-                    <h3 className={styles.postTitle}>Lorem ipsum, dolor sit amet consectetur adipisicing elit.</h3>
+                    <span className={` ${styles.category} ${styles.travel} `}>React</span>
+                    <h3 className={styles.postTitle}>React </h3>
                     <div className={styles.detail}>
                         <span className={styles.name}> John Doe</span>
                         <span className={styles.date}> - 10.02.2023</span>
