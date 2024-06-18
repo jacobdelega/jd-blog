@@ -14,12 +14,6 @@ const Featured = () => {
             </h1> */}
             <div className={styles.post}>
                 <div className={styles.imgContainer}>
-                    {/* <Image
-                        className={styles.image}
-                        src='/p1.jpeg'
-                        alt=''
-                        fill
-                    /> */}
                     <HeroLottie src='/lotties/hero_lottie.json'/>
                 </div>
                 <div className={styles.textContainer}>

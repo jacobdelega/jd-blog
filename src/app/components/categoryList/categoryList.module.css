@@ -2,7 +2,7 @@
 }
 
 .title {
-    margin: 50px 0px;
+    margin: 75px 0px;
 }
 
 .categories {
@@ -50,11 +50,23 @@
     .category {
         width: 20%;
     }
+
+    .title {
+        margin-top: 5px;
+        margin-bottom: 35px;
+    }
+
+
 }
 @media screen and (max-width: 1024px){
     .category {
         width: 25%;
     }
+
+    .title {
+        margin: 35px 0px;
+    }
+
 }
 @media screen and (max-width: 768px){
     .category {
