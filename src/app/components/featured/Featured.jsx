@@ -14,7 +14,7 @@ const Featured = () => {
             </h1> */}
             <div className={styles.post}>
                 <div className={styles.imgContainer}>
-                    <HeroLottie src='/lotties/hero_lottie.json'/>
+                    <HeroLottie className={styles.image} src='/lotties/hero_lottie.json'/>
                 </div>
                 <div className={styles.textContainer}>
                     <h1 className={styles.postTitle}>I'm Jacob Delega.</h1>

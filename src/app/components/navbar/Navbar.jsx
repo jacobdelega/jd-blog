@@ -44,11 +44,11 @@ const Navbar = () => {
                     className={styles.link}>
                     Contact
                 </Link>
-                <Link
+                {/* <Link
                     href='/about'
                     className={styles.link}>
                     About
-                </Link>
+                </Link> */}
                 <AuthLinks />
             </div>
         </div>

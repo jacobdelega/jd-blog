@@ -26,6 +26,11 @@ const WritePage = () => {
 
     const router = useRouter();
 
+    // ReactQuill custom options
+    const modules = {
+        toolbar: [[{ header: "1" }, { header: "2" }, { font: [] }], [{ size: [] }], ["bold", "italic", "underline", "strike", "blockquote"], [{ list: "ordered" }, { list: "bullet" }], ["link", "image", "video"], ["clean"], ["code-block"]],
+    };
+
     useEffect(() => {
         const storage = getStorage(app);
         const upload = () => {
@@ -68,11 +73,12 @@ const WritePage = () => {
     }
 
     const slugify = (str) => {
-        str.toLowerCase()
+        return str
+            .toLowerCase()
             .trim()
-            .replace(/[^\w\s-]/g, "")
-            .replace(/[\s_-]+/g, "-")
-            .replace(/^-+|-+$/g, "");
+            .replace(/[^\w\s-]/g, "")   // Remove non-word characters
+            .replace(/[\s_-]+/g, "-")   // Replace spaces and underscores with hyphens
+            .replace(/^-+|-+$/g, "");   // Remove leading and trailing hyphens
     };
 
     const handleSubmit = async () => {
@@ -83,7 +89,7 @@ const WritePage = () => {
                 desc: value,
                 img: media,
                 slug: slugify(title),
-                catSlug: catSlug || "style", //If not selected, choose the general category
+                catSlug: catSlug, //If not selected, choose the general category
             }),
         });
 
@@ -143,6 +149,7 @@ const WritePage = () => {
                     </div>
                 )}
                 <DynamicQuill
+                    modules={modules}
                     className={styles.textArea}
                     theme='bubble'
                     value={value}
