@@ -89,7 +89,7 @@ const WritePage = () => {
                 desc: value,
                 img: media,
                 slug: slugify(title),
-                catSlug: catSlug, //If not selected, choose the general category
+                catSlug: catSlug || 'react', //If not selected, choose the general category
             }),
         });
 
@@ -109,7 +109,7 @@ const WritePage = () => {
             />
             <select
                 className={styles.select}
-                onChange={(e) => setCatSlug(e.target.value)}>
+                onChange={(e) => {setCatSlug(e.target.value);} }>
                 <option value='react'>React</option>
                 <option value='nextjs'>NextJS</option>
                 <option value='python'>Python</option>

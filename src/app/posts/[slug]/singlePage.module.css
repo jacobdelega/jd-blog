@@ -12,6 +12,10 @@
     font-size: 64px;
     margin-bottom: 50px;
 }
+.postTitle {
+    font-size: 64px;
+    margin-bottom: 50px;
+}
 
 .user {
     display: flex;

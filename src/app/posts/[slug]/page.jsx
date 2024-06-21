@@ -5,18 +5,6 @@ import Menu from "../../components/menu/Menu";
 import Comments from "../../components/comments/Comments";
 import prisma from "@/app/utils/connect";
 
-// const getData = async (slug) => {
-//     const res = await fetch(`http://localhost:3000/api/posts/${slug}`, {
-//         cache: "no-store",
-//     });
-
-//     if (!res.ok) {
-//         throw new Error("Failed");
-//     }
-
-//     return res.json();
-// };
-
 const SinglePage = async ({ params }) => {
     const { slug } = params;
     const data = await prisma.post.update({
