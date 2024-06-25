@@ -1,0 +1,31 @@
+.textContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.input {
+    padding: 0.5rem;
+}
+
+.button {
+    padding: 0.5rem;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.responseContainer {
+    font-size: 1.5rem;
+}

@@ -1,40 +1,47 @@
-'use client'
-import { useSession } from "next-auth/react";
-import { useState, useEffect } from "react";
-import styles from './posts.module.css'
+import { Suspense } from "react";
+import * as React from "react";
+import styles from "./posts.module.css";
+import { getAuthSession } from "@/app/utils/auth";
+import prisma from "@/app/utils/connect";
+import PostGrid from "../components/postGrid/PostGrid"; // Client componenet
 
-const PostPage = () => {
-    // grab session details
-    const { data: session, status } = useSession();
-    const [posts, setPosts] = useState([]);
 
-    // make a fetch request to get all posts from user email
-    const fetchPost = async () => {
-        const response = await fetch(`/api/post?email=${session.user.email}`);
-        const data = await response.json();
+// Since this is server componenet we can use the prisma client directly
+// this function is only needed if we are pulling from a client side api
+async function getData(session) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post?email=${session.user.email}`, { cache: "no-store" });
+    const data = await response.json();
+    return data.posts;
+}
 
-        if (response.ok) {
-            setPosts(data.posts);
-        }
+const PostPage = async () => {
+    const session = await getAuthSession();
+    const posts = await prisma.post.findMany({
+        where: {
+            user: {
+                email: session?.user?.email,
+            },
+        },
+        include: { user: true },
+    });
+
+
+    // Verify post for that user
+    if (posts.length === 0) {
+        return <div>No posts found for the specified user</div>;
+    }
+
+    // Loading state
+    const Loading = () => {
+        return <div>Grabbing posts....</div>;
     };
 
-    useEffect(() => {
-        if (session) {
-            fetchPost();
-        }
-    }, [session]);
-
     return (
-        <div>
-            <h1>All Users Post Page</h1>
-            <div>
-                {posts.map((post) => (
-                    <div key={post.id}>
-                        <h2 className={styles.postTitle}>{post.title}</h2>
-                    </div>
-                ))}
+        <Suspense fallback={<Loading />}>
+            <div className={styles.container}>
+                <PostGrid posts={posts} />
             </div>
-        </div>
+        </Suspense>
     );
 };
 

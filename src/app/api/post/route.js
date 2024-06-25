@@ -1,31 +1,21 @@
 import prisma from "@/app/utils/connect";
 import { NextResponse } from "next/server";
 
-// Grabbing all the post based on user email
-export const GET = async (req) => {
+// Delete the post
+export const DELETE = async (req) => {
     const { searchParams } = new URL(req.url);
-    const userEmail = searchParams.get("email");
-
-    // Validate email parameter
-    if (!userEmail) {
-        return NextResponse.json({ message: "Email parameter is required" }, { status: 400 });
-    }
+    const postID = searchParams.get("id");
 
     try {
-        const posts = await prisma.post.findMany({
+        await prisma.post.delete({
             where: {
-                user: {
-                    email: userEmail,
-                },
+                id: postID,
             },
         });
 
-        if (posts.length === 0) {
-            return NextResponse.json({ message: "No posts found for the specified user" }, { status: 404 });
-        }
-        
-        return NextResponse.json({ posts: posts }, { status: 200 });
+        return new NextResponse(JSON.stringify({ message: "Post deleted successfully" }), { status: 200 });
     } catch (error) {
-        return NextResponse.json({ message: "An error occurred while fetching posts" }, { status: 500 });
+        console.error("An error occurred while deleting the post:", error);
+        return new NextResponse(JSON.stringify({ message: "An error occurred while deleting the post" }), { status: 500 });
     }
 };
