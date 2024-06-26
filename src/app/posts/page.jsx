@@ -8,11 +8,11 @@ import PostGrid from "../components/postGrid/PostGrid"; // Client componenet
 
 // Since this is server componenet we can use the prisma client directly
 // this function is only needed if we are pulling from a client side api
-async function getData(session) {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post?email=${session.user.email}`, { cache: "no-store" });
-    const data = await response.json();
-    return data.posts;
-}
+// async function getData(session) {
+//     const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post?email=${session.user.email}`, { cache: "no-store" });
+//     const data = await response.json();
+//     return data.posts;
+// }
 
 const PostPage = async () => {
     const session = await getAuthSession();

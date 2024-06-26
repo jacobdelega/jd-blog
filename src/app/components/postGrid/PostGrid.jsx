@@ -7,16 +7,12 @@ import styles from "./postGrid.module.css";
 import { useState } from "react";
 
 const PostGrid = ({ posts }) => {
-    const theme = createTheme({
-        mixins: {
-            MuiDataGrid: {
-                // Pinned columns sections
-                pinnedBackground: "#340606",
-                // Headers, and top & bottom fixed rows
-                containerBackground: "#343434",
-            },
-        },
-    });
+    const MyCustomNoRowsOverlay = () => (
+        <img
+            src='/no-items-found.jpg'
+            alt='no-item'
+        />
+    );
 
     async function handleDelete(id) {
         try {
@@ -92,13 +88,12 @@ const PostGrid = ({ posts }) => {
                 // checkboxSelection
                 // getRowClassName={(params) => "highlight"}
                 sx={{
-                    '& .MuiDataGrid-columnHeader, & .MuiDataGrid-cell, & .MuiDataGrid-footerContainer': {
-                     backgroundColor: "white",
-                     color: "black",
-                     fontWeight: 500,
-                  },
-                  textAlign: 'center',
-
+                    "& .MuiDataGrid-columnHeader, & .MuiDataGrid-cell, & .MuiDataGrid-footerContainer, & .MuiDataGrid-filler": {
+                        backgroundColor: "white",
+                        color: "black",
+                        fontWeight: 500,
+                    },
+                    textAlign: "center",
                 }}
             />
         </div>
