@@ -2,7 +2,8 @@
     --bg: white;
     --textColor:black;
     --softBg: #f0f0f0;
-    --softTextColor: #626262
+    --softTextColor: #626262;
+    --labelColor: rgb(88, 176, 243);
 }
 
 * {
@@ -26,12 +27,16 @@ a {
     --textColor: #ddd;
     --softBg: #1f273a;
     --softTextColor: #a6a6a6;
+    --email-color: red;
+    --label: rgba(88, 176, 243, .8);
 }
 .light {
     --bg: white;
     --textColor:black;
     --softBg: #f0f0f0;
-    --softTextColor: #626262
+    --softTextColor: #626262;
+    --email-color: rgb(88, 176, 243);
+    --label: rgba(88, 176, 243, 1);
 }
 
 
@@ -40,6 +45,7 @@ a {
     background-color: var(--bg);
     color: var(--textColor);
 }
+
 
 .wrapper {
     max-width: 1532px;

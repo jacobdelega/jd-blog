@@ -1,0 +1,109 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.label {
+    margin-top: 20px;
+    background-color: var(--label);
+    padding: 10px;
+    border-radius: 15px;
+    font-size: 15px;
+    width: fit-content;
+    color: white;
+}
+
+.title {
+    margin-top: 1rem;
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.subtitle {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.email {
+    color: var(--email-color);
+}
+
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 50%;
+}
+
+.inputContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.input {
+    padding: 10px;
+    border-radius: 15px;
+    border: 1px solid black;
+    font-size: 15px;
+}
+
+.input:focus {
+    border: 1px solid white;
+}
+
+.textarea {
+    padding: 12px 20px;
+    width: 100%;
+    height: 150px;
+    border-radius: 15px;
+    border: 1px solid black;
+    font-size: 15px;
+}
+
+.button {
+    padding: 15px;
+    border-radius: 15px;
+    background-color: var(--label);
+    color: white;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+}
+
+.inputLabel{
+    margin-left: 10px;
+    color: var(--textColor);
+    font-weight: semi-bold;
+}
+
+
+@media screen and (max-width: 1280px) {
+    .mainContent {
+        width: 60%;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .mainContent {
+        width: 75%;
+    }
+}
+@media screen and (max-width: 768px) {
+    .mainContent {
+        width: 80%;
+    }
+    .title {
+        font-size: 36px;
+    }
+}
+@media screen and (max-width: 640px) {
+    .mainContent {
+        width: 100%;
+    }
+
+    .title {
+        font-size: 36px;
+    }
+}
