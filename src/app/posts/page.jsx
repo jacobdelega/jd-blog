@@ -39,7 +39,7 @@ const PostPage = async () => {
     return (
         <Suspense fallback={<Loading />}>
             <div className={styles.container}>
-                <PostGrid posts={posts} />
+                <PostGrid className={styles.postContainer} posts={posts} />
             </div>
         </Suspense>
     );

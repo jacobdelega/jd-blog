@@ -5,6 +5,8 @@ import { createTheme } from "@mui/material/styles";
 import { MdFolderDelete } from "react-icons/md";
 import styles from "./postGrid.module.css";
 import { useState } from "react";
+import useSWR from "swr";
+
 
 const PostGrid = ({ posts }) => {
     const MyCustomNoRowsOverlay = () => (
@@ -16,15 +18,20 @@ const PostGrid = ({ posts }) => {
 
     async function handleDelete(id) {
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/post?id=${id}`, { method: "DELETE" });
+
+            const response = await fetch(`/api/post?id=${id}`, { method: "DELETE" });
 
             if (!response.ok) {
                 throw new Error(`Error: ${response.status} - ${response.statusText}`);
             }
+
             const data = await response.json();
 
             // Remove the deleted post from the grid
             setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+
+            mutate('/api/posts');
+
         } catch (error) {
             console.error("Failed to delete post:", error.message);
         }

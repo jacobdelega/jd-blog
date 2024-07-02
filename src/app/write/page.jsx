@@ -21,6 +21,10 @@ const WritePage = () => {
     const [file, setFile] = useState("");
     const [title, setTitle] = useState("");
     const [catSlug, setCatSlug] = useState("");
+    const [data, setData] = useState();
+    const [input, setInput] = useState("");
+    const [isOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const { status } = useSession();
 
@@ -76,9 +80,9 @@ const WritePage = () => {
         return str
             .toLowerCase()
             .trim()
-            .replace(/[^\w\s-]/g, "")   // Remove non-word characters
-            .replace(/[\s_-]+/g, "-")   // Replace spaces and underscores with hyphens
-            .replace(/^-+|-+$/g, "");   // Remove leading and trailing hyphens
+            .replace(/[^\w\s-]/g, "") // Remove non-word characters
+            .replace(/[\s_-]+/g, "-") // Replace spaces and underscores with hyphens
+            .replace(/^-+|-+$/g, ""); // Remove leading and trailing hyphens
     };
 
     const handleSubmit = async () => {
@@ -89,7 +93,7 @@ const WritePage = () => {
                 desc: value,
                 img: media,
                 slug: slugify(title),
-                catSlug: catSlug || 'react', //If not selected, choose the general category
+                catSlug: catSlug || "react", //If not selected, choose the general category
             }),
         });
 
@@ -99,70 +103,132 @@ const WritePage = () => {
         }
     };
 
+    const main = async () => {
+        setLoading(true);
+        // Format the input to be a proper prompt
+        const customPrompt = "Do not mention anything about the question in the response just give the reponse and nothing else. Also do not provide any bullet points just plain text. [Limit your response to only 50 words.]";
+
+        try {
+            const response = await fetch("http://localhost:11434/api/generate", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    model: "llama3",
+                    prompt: `${customPrompt} ${input}`,
+                    stream: false,
+                }),
+            });
+            const responseData = await response.json();
+
+            setData(responseData.response);
+        } catch (error) {
+            setData("Error fetching data");
+            console.log("Error fetching data");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
     return (
-        <div className={styles.container}>
-            <input
-                type='text'
-                placeholder='Title'
-                className={styles.input}
-                onChange={(e) => setTitle(e.target.value)}
-            />
-            <select
-                className={styles.select}
-                onChange={(e) => {setCatSlug(e.target.value);} }>
-                <option value='react'>React</option>
-                <option value='nextjs'>NextJS</option>
-                <option value='python'>Python</option>
-                <option value='fitness'>Fitness</option>
-                <option value='freelancing'>Freelancing</option>
-                <option value='leetcode'>LeetCode</option>
-            </select>
-            <div className={styles.editor}>
-                <button
-                    className={styles.button}
-                    onClick={() => setOpen(!open)}>
-                    <Image
-                        src='/plus.png'
-                        alt=''
-                        width={16}
-                        height={16}
+        <>
+            <div className={styles.container}>
+                <input
+                    type='text'
+                    placeholder='Title'
+                    className={styles.input}
+                    onChange={(e) => setTitle(e.target.value)}
+                />
+                <select
+                    className={styles.select}
+                    onChange={(e) => {
+                        setCatSlug(e.target.value);
+                    }}>
+                    <option value='react'>React</option>
+                    <option value='nextjs'>NextJS</option>
+                    <option value='python'>Python</option>
+                    <option value='fitness'>Fitness</option>
+                    <option value='freelancing'>Freelancing</option>
+                    <option value='leetcode'>LeetCode</option>
+                </select>
+                <div className={styles.editor}>
+                    <button
+                        className={styles.button}
+                        onClick={() => setOpen(!open)}>
+                        <Image
+                            src='/plus.png'
+                            alt=''
+                            width={16}
+                            height={16}
+                        />
+                    </button>
+                    {open && (
+                        <div className={styles.add}>
+                            <button className={styles.addButton}>
+                                <label htmlFor='image'>
+                                    <Image
+                                        src='/image.png'
+                                        alt=''
+                                        width={16}
+                                        height={16}
+                                    />
+                                    <input
+                                        type='file'
+                                        id='image'
+                                        onChange={(e) => setFile(e.target.files[0])}
+                                        style={{ display: "none" }}
+                                    />
+                                </label>
+                            </button>
+                        </div>
+                    )}
+                    <DynamicQuill
+                        modules={modules}
+                        className={styles.textArea}
+                        theme='bubble'
+                        value={value}
+                        onChange={setValue}
+                        placeholder='tell me your story'
                     />
+                </div>
+                <button
+                    className={styles.publish}
+                    onClick={handleSubmit}>
+                    Publish
                 </button>
-                {open && (
-                    <div className={styles.add}>
-                        <button className={styles.addButton}>
-                            <label htmlFor='image'>
-                                <Image
-                                    src='/image.png'
-                                    alt=''
-                                    width={16}
-                                    height={16}
-                                />
-                                <input
-                                    type='file'
-                                    id='image'
-                                    onChange={(e) => setFile(e.target.files[0])}
-                                    style={{ display: "none" }}
-                                />
-                            </label>
+            </div>
+
+            
+            {/* AI Widget */}
+            <div className={styles.widgetContainer}>
+                <div
+                    className={`${styles.circleIcon} ${isOpen ? styles.open : ""}`}
+                    onClick={() => setIsOpen(!isOpen)}>
+                    <span>+</span>
+                </div>
+                {isOpen && (
+                    <div className={styles.expandedWidget}>
+                        <label className={styles.widgetTitle}>Ask Llama3 something:</label>
+                        <input
+                            type='text'
+                            placeholder='Enter your question here'
+                            className={styles.widgetInput}
+                            onChange={(e) => setInput(e.target.value)}
+                        />
+                        <button
+                            onClick={main}
+                            className={styles.widgetButton}>
+                            Submit
                         </button>
+                        <p className={styles.widgetTitle}>Response:</p>
+                        <div className={styles.widgetOutput}>{loading ? <div>Loading response...</div> : <div>{data}</div>}</div>
                     </div>
                 )}
-                <DynamicQuill
-                    modules={modules}
-                    className={styles.textArea}
-                    theme='bubble'
-                    value={value}
-                    onChange={setValue}
-                    placeholder='tell me your story'
-                />
             </div>
-            <button
-                className={styles.publish}
-                onClick={handleSubmit}>
-                Publish
-            </button>
-        </div>
+            );
+        </>
     );
 };
 
