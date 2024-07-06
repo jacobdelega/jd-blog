@@ -23,7 +23,7 @@ const MenuPost = async ({ withImage }) => {
         <div className={styles.items}>
             {popularPost.map((post) => (
                 <Link
-                    href={`/post/${post.slug}`}
+                    href={`/posts/${post.slug}`}
                     className={styles.item}>
                     {withImage && (
                         <div className={styles.imgContainer}>

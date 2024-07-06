@@ -6,7 +6,7 @@ import { MdFolderDelete } from "react-icons/md";
 import styles from "./postGrid.module.css";
 import { useState } from "react";
 import useSWR from "swr";
-
+import Link from "next/navigation";
 
 const PostGrid = ({ posts }) => {
     const MyCustomNoRowsOverlay = () => (
@@ -18,7 +18,6 @@ const PostGrid = ({ posts }) => {
 
     async function handleDelete(id) {
         try {
-
             const response = await fetch(`/api/post?id=${id}`, { method: "DELETE" });
 
             if (!response.ok) {
@@ -30,8 +29,7 @@ const PostGrid = ({ posts }) => {
             // Remove the deleted post from the grid
             setRows((prevRows) => prevRows.filter((row) => row.id !== id));
 
-            mutate('/api/posts');
-
+            mutate("/api/posts");
         } catch (error) {
             console.error("Failed to delete post:", error.message);
         }
@@ -50,6 +48,10 @@ const PostGrid = ({ posts }) => {
             width: 160,
         },
         { field: "createdAt", headerName: "Created At", width: 160 },
+        { field: "link", headerName: "Link to post", width: 200, renderCell: (params) => {
+            return <a className={styles.test} href={`/posts/${params.row.slug}`}>/posts/{params.row.slug}</a>;
+        },
+        },
         {
             field: "actions",
             type: "actions",
@@ -67,6 +69,14 @@ const PostGrid = ({ posts }) => {
                 ];
             },
         },
+        // {
+        //     field: "link",
+        //     headerName: "Link to post",
+        //     width: 200,
+        //     valueGetter: (value, initialRows) => {
+        //         return initialRows.title;
+        //     },
+        // },
     ];
 
     const initialRows = posts.map((post) => ({
@@ -76,6 +86,7 @@ const PostGrid = ({ posts }) => {
         views: post.views,
         fullName: post.user.name,
         createdAt: new Date(post.createdAt).toDateString(),
+        slug: post.slug,
     }));
 
     const [rows, setRows] = useState(initialRows); // for updating the grid
