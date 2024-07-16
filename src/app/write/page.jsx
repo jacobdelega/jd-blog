@@ -38,6 +38,7 @@ const WritePage = () => {
     useEffect(() => {
         const storage = getStorage(app);
         const upload = () => {
+            console.log('file name: ', file.name)
             const name = new Date().getTime() + file.name; // To ensure a unique file name
             const storageRef = ref(storage, name);
 
@@ -47,7 +48,7 @@ const WritePage = () => {
                 "state_changed",
                 (snapshot) => {
                     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log("Upload is " + progress + "% done");
+
                     switch (snapshot.state) {
                         case "paused":
                             console.log("Upload is paused");
@@ -227,7 +228,6 @@ const WritePage = () => {
                     </div>
                 )}
             </div>
-            );
         </>
     );
 };

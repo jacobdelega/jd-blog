@@ -18,6 +18,8 @@ const MenuPost = async ({ withImage }) => {
         take: 3,
     });
 
+    console.log(popularPost)
+
 
     return (
         <div className={styles.items}>
