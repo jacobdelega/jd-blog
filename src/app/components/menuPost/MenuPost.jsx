@@ -6,9 +6,6 @@ import prisma from "../../utils/connect";
 
 const MenuPost = async ({ withImage }) => {
     const popularPost = await prisma.post.findMany({
-        where: {
-            img: null,
-        },
         orderBy: {
             views: "desc", // desc for descending order
         },
@@ -18,7 +15,7 @@ const MenuPost = async ({ withImage }) => {
         take: 3,
     });
 
-    console.log(popularPost)
+    // console.log(popularPost)
 
 
     return (
